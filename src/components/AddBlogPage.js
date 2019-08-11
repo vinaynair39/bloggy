@@ -7,6 +7,7 @@ export const AddBlogPage = ({addBlog, history}) => (
     <div>
         Add Blog page
         <BlogForm onSubmit = {(blog) => {
+            console.log(blog)
             addBlog(blog);
             history.push('/');
             }}/>

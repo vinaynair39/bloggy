@@ -1,11 +1,46 @@
-const authReducer = (state = {}, action) => {
+const initialState = {
+    isAuthenticated: false,
+    loading: false,
+}
+
+const authReducer = (state=initialState , action) => {
     switch(action.type){
         case 'LOGIN':
             return {
-                uid: action.uid
+                ...state,
+                isAuthenticated: true,
             };
         case 'LOGOUT':
-            return {};
+            return {
+                isAuthenticated:false
+            };
+        case 'LOADING_UI':
+            return {
+                ...state,
+                loading: true,
+            };
+        case 'UNLOADING_UI':
+            return {
+            ...state,
+            loading: false
+        };
+        case 'SET_ERRORS':
+            return {
+                ...state,
+                loading: false,
+                error: action.error
+            };
+        case 'CLEAR_ERRORS':
+            return {
+                ...state,
+                loading: false,
+                error: null
+            };    
+        case 'UNSET_AUTHENTICATED':
+            return {
+                ...state,
+                isAuthenticated: false
+            };
         default:
             return state;
     }

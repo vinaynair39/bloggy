@@ -2,12 +2,13 @@ import React from 'react';
 import moment from 'moment'
 import Link from 'react-router-dom/Link'
 
-export const BlogListItem = ({title, content, createdAt, id}) => (
+export const BlogListItem = ({title, description, createdAt,userHandle, id}) => (
     <div>
-        <Link to={`/edit/${id}`}>
+        <Link to={`/blog/${id}`}>
             <h2>{title}</h2>
         </Link>
-        <p>{content}</p>
+        <p>{description.substring(0,80) + '...'}</p>
+        <p>By: {userHandle}</p>
         <p>{moment(createdAt).format("Do MMM YYYY")}</p>
     </div>
 );

@@ -1,48 +1,58 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import * as serviceWorker from './serviceWorker';
 import AppRouter from './routers/AppRouter';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
-import {firebase} from './firebase/firebase';
 import {login, logout} from './actions/auth';
 import {startSetBlogs} from './actions/blogs';
 import {history} from './routers/AppRouter';
-import * as serviceWorker from './serviceWorker';
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
+import 'normalize.css/normalize.css';
+import './styles/styles.scss';
+import './index.css';
+
 const store = configureStore();
 
 const jsx = (
     <Provider store={store}>
-    <AppRouter />
+      <AppRouter />
     </Provider>
-)
+  );
 
 let hasRendered = false;
 const renderApp = () => {
-  if (!hasRendered) {
-    ReactDOM.render(jsx, document.getElementById('root'));
-    hasRendered = true;
-  }
-};
-ReactDOM.render(<p>Loading...</p>, document.getElementById('root'));
-firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      store.dispatch(login(user.uid));
-      store.dispatch(startSetBlogs()).then(() => {
-        renderApp();
-      if (history.location.pathname === '/') {
-        history.push('/dashboard');
+    if (!hasRendered) {
+        ReactDOM.render(jsx, document.getElementById('root'));
+        hasRendered = true;
       }
-      });
-    } else {
-      store.dispatch(logout());
-      renderApp();
-      history.push('/');
+};
+
+ReactDOM.render(<p>Loading...</p>, document.getElementById('root'));
+const token = sessionStorage.getItem('FBIdToken');
+console.log('miki' +token)
+if (token) {
+    const decodedToken = jwtDecode(token);
+    if (decodedToken.exp * 1000 < Date.now()) {
+        store.dispatch(logout());
+        renderApp();
+        history.push('/');
     }
-  });
+    else {
+    console.log("hello boi");
+    store.dispatch(login());
+    axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch(startSetBlogs()).then(() => {
+        renderApp();
+        if (history.location.pathname === '/') {
+            history.push('/dashboard');
+          }
+    })
+    }
+}else{
+    renderApp();
+}
 
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();

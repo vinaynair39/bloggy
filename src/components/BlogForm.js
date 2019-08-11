@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import moment from 'moment';
-import uuid from 'uuid';
 export default class BlogForm extends Component {
     constructor(props){
         super(props);
         this.state = {
             title: props.blog ?  props.blog.title : '',
-            content: props.blog ? props.blog.content : '',
-            createdAt: props.blog ? props.blog.createdAt:  moment(),
+            description: props.blog ? props.blog.description : '',
             error: ''
         }
     }
@@ -16,23 +13,21 @@ export default class BlogForm extends Component {
         const title = e.target.value;
         this.setState(() => ({title}));
     }
-
     
-    onContentChange = (e) =>{
-        const content = e.target.value;
-        this.setState(() => ({content}));
+    onDescriptionChange = (e) =>{
+        const description = e.target.value;
+        this.setState(() => ({description}));
     }
 
     onSubmit = (e) => {
         e.preventDefault();
-        if (!this.state.title || !this.state.content) {
+        if (!this.state.title || !this.state.description) {
           this.setState(() => ({ error: 'Please provide title and content.' }));
         } else {
           this.setState(() => ({ error: '' }));
           this.props.onSubmit({
             title: this.state.title,
-            content: this.state.content,
-            createdAt: this.state.createdAt.valueOf(),
+            description: this.state.description,
           });
         }
       };
@@ -48,8 +43,8 @@ export default class BlogForm extends Component {
                     />
                     <textarea name="" id="" cols="30" rows="10" 
                     placeholder='your content' 
-                    value={this.state.content}
-                    onChange={this.onContentChange}
+                    value={this.state.description}
+                    onChange={this.onDescriptionChange}
                     ></textarea>
                     <button>Post</button>
                 </form>

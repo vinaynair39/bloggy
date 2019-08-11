@@ -1,5 +1,6 @@
 import  database  from '../firebase/firebase';
 import {history} from '../routers/AppRouter';
+import axios from 'axios';
 
 
 export const addBlog = (blog) => ({
@@ -9,17 +10,11 @@ export const addBlog = (blog) => ({
 
 export const startAddBlog = (blogData = {}) => {
     return (dispatch,getState) => {
-        const uid = getState().auth.uid;
-        return database.collection(`blogList/users/${uid}`).add({
-            ...blogData
-          }).then(ref => {
-            console.log('tolo' + ref.id);
-            dispatch(addBlog({
-                id: ref.id,
-                ...blogData
-              }));
-          }).then(() => history.push('/'));
-    
+        axios.post('/add', blogData).then((res) => {
+            dispatch(addBlog(res.data));
+        }).catch(err => {
+            console.log(err.response)
+        })
     }
 }
 
@@ -63,34 +58,44 @@ export const setBlogs = (blogs) => {
   }
 
 export const startSetBlogs = () => {
-    return (dispatch, getState) => {
-        let allBlogs = [];
-        const uid = getState().auth.uid;
-        return database.collection(`blogList/users/${uid}`).get().then((snapshot) => {
-            snapshot.docs.forEach(doc => {
-                allBlogs.push({
-                    id: doc.id,
-                    ...doc.data()
-                });
-            });
-            console.log(allBlogs);
-            dispatch(setBlogs(allBlogs));
-        });
+    return (dispatch) => {
+        return axios.get('/blogs').then(res => {
+            dispatch(setBlogs(res.data));
+        })
     }
 };
 
-// export const startSetBlogs = () => {
-//     return (dispatch) => {
-//         let allBlogs = [];
-//         return database.collection(`blogList`).doc('users').onSnapshot((snapshot) => {
-//             console.log(""+snapshot);
-//             snapshot.docs.forEach(doc => {
-//                 allBlogs.push({
-//                     id: doc.id,
-//                     ...doc.data()
-//                 });
-//             });
-//         })
-//         dispatch(setBlogs(allBlogs));
-//     }
-// };
+export const likeBlog = (likes) => {
+    return {
+      type: "LIKE_BLOG",
+      likes
+    };
+  }
+
+export const setLikeBlog = (blogId) => {
+    return (dispatch) => {
+        return axios.post(`${blogId}/like`).then((res) => {
+            dispatch(likeBlog(res.data))
+        }).catch(err => console.log(err))
+    }
+}
+
+
+export const getBlog = (comments) => {
+    return {
+      type: "GET_BLOG",
+      comments
+    };
+  }
+
+export const startGetBlog = (blogId) => {
+    return (dispatch) => {
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+        return axios.get(`${blogId}/comments`, { cancelToken: source.token }).then((res) => {
+            return res.data;
+        }).catch(err => console.log(err))
+    }
+}
+
+
