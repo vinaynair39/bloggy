@@ -1,6 +1,7 @@
 import {firebase} from '../firebase/firebase';
 import axios from 'axios'
-
+import {startSetBlogs} from './blogs'
+import {history} from '../routers/AppRouter';
 export const login =  () => {
     return{
         type: 'LOGIN',
@@ -26,6 +27,11 @@ export const startLogin =  (credentials) => {
             setAuthorizationHeader(res.data.token);
             dispatch(login());
             dispatch({type: 'UNLOADING_UI'});
+            dispatch(startSetBlogs()).then(() => {
+                if (history.location.pathname === '/') {
+                    history.push('/dashboard');
+                  }
+            })
             }).catch(err => {
                 dispatch({
                     type: 'SET_ERRORS',

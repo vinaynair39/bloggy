@@ -13,7 +13,7 @@ export const BlogCard = (props) => {
         const result = await axios.get(`${blogId}/comments`, { cancelToken: source.token })
         setComments(result);
     }
-    useEffect(() => {
+    useEffect((comments, id) => {
         getComments(id);
         console.log(comments);
     }, []);
