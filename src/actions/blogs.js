@@ -65,29 +65,6 @@ export const startSetBlogs = () => {
     }
 };
 
-export const likeBlog = (likes) => {
-    return {
-      type: "LIKE_BLOG",
-      likes
-    };
-  }
-
-export const setLikeBlog = (blogId) => {
-    return (dispatch) => {
-        return axios.post(`${blogId}/like`).then((res) => {
-            dispatch(likeBlog(res.data))
-        }).catch(err => console.log(err))
-    }
-}
-
-
-export const getBlog = (comments) => {
-    return {
-      type: "GET_BLOG",
-      comments
-    };
-  }
-
 export const startGetBlog = (blogId) => {
     return (dispatch) => {
         const CancelToken = axios.CancelToken;
@@ -99,3 +76,40 @@ export const startGetBlog = (blogId) => {
 }
 
 
+export const likeBlog = (id) => {
+    return {
+      type: "LIKE_BLOG",
+      id
+    };
+  }
+
+export const setLikeBlog = (blogId) => {
+    return (dispatch) => {
+        return axios.post(`${blogId}/like`).then((res) => {
+            dispatch(likeBlog(blogId))
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data.error)
+            console.log(err)
+        })
+    }
+}
+
+export const unLikeBlog = (id) => {
+    return {
+      type: "UNLIKE_BLOG",
+      id
+    };
+  }
+
+export const setUnLikeBlog = (blogId) => {
+    return (dispatch) => {
+        return axios.post(`${blogId}/unlike`).then((res) => {
+            dispatch(unLikeBlog(blogId))
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data.error)
+            console.log(err)
+        })
+    }
+}

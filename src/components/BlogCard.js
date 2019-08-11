@@ -1,46 +1,51 @@
 import React, {useState, useEffect} from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
-import {setLikeBlog, startGetBlog} from '../actions/blogs';
-import axios from 'axios';
+import {setLikeBlog, setUnLikeBlog} from '../actions/blogs';
+import {startGetComments} from '../actions/comments'
 export const BlogCard = (props) => {
     const id = props.match.params.id
-    const [comments, setComments] = useState([]);
+    useEffect(() =>{
+        props.getComments(id);
+    },[])
 
-    async function getComments(blogId) {
-        const CancelToken = axios.CancelToken;
-        const source = CancelToken.source();
-        const result = await axios.get(`${blogId}/comments`, { cancelToken: source.token })
-        setComments(result);
-    }
-    useEffect((comments, id) => {
-        getComments(id);
-        console.log(comments);
-    }, []);
-
-    const onClick = () => {
+    const onClickLike = () => {
         props.likeBlog(id);
+    }
+    const onClickUnLike = () => {
+        props.unLikeBlog(id);
     }
     return(
         <div>
             <h2>{props.blog.title}</h2><p>By: {props.blog.userHandle}</p> <p>{moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
             <p>{props.blog.description}</p>
             <button 
-            onClick={onClick}>
+            onClick={onClickLike}>Like{props.blog.likeCount}
             </button>
-            {comments.forEach(comment => (<li>{comment}</li>))}
+            <button 
+            onClick={onClickUnLike}>Unlike
+            </button>
+            <ul>
+                comments:
+            {props.comments.map(comment => {
+                return <li>{comment.body}</li>
+            })}
+            </ul>
+
         </div>
     )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getBlog: (blogId) => dispatch(startGetBlog(blogId)),
+    getComments: (blogId) => dispatch(startGetComments(blogId)),
     likeBlog: (blogId) => dispatch(setLikeBlog(blogId)),
+    unLikeBlog: (blogId) => dispatch(setUnLikeBlog(blogId)),
     
 });
 
 const mapStateToProps = (state, props) => ({
-    blog: state.blogs.find((blog) => blog.id === props.match.params.id)
+    blog: state.blogs.find((blog) => blog.id === props.match.params.id),
+    comments: state.comments
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogCard);
