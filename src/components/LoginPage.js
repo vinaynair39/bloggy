@@ -15,10 +15,8 @@ export const LoginPage = ({ startLogin, startLoginUsingGoogle, error}) => {
                 password
             };
             startLogin(credentials).then(() => {
-                history.push('/dashboard');
-            }).catch(() => {
-                console.error('hello');
-            });
+                console.log('bitch')
+            })
         }
     }
     return(

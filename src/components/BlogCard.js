@@ -19,6 +19,7 @@ export const BlogCard = (props) => {
 
         });
     };
+
     return(
         <div>
             {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state, props) => ({
-    blog: state.blogs.find((blog) => blog.id === props.match.params.id),
+    blog: state.blogs.find(blog => blog.id === props.match.params.id),
     userHandle : state.auth.userHandle
 });
 

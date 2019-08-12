@@ -36,7 +36,7 @@ export const startLogin =  (credentials) => {
             }).catch(err => {
                 dispatch({
                     type: 'SET_ERRORS',
-                    error: err.response.data.general || err.response.data.err
+                    error: err.response ? (err.response.data.general || err.response.data.err ) : ''
                 })
             });
 }};

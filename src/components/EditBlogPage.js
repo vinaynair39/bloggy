@@ -7,10 +7,8 @@ import {startRemoveBlog} from '../actions/blogs';
 
 const EditBlogPage= (props) => {
 
-    const [update, setUpdate] = useState(props.blog);
 
-    const onSubmit = (blog) => {
-        setUpdate(props.blog)
+    const onSubmit = (update) => {
         props.editBlog(props.blog.id, update);
         
     }

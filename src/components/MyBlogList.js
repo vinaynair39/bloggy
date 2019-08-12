@@ -6,22 +6,26 @@ import {startGetUser} from '../actions/auth';
 
 export const MyBlogList = (props) => {
 
-    const [loading, setLoading] = useState(false);
-    const userHandle = props.userHandle ? props.userHandle : sessionStorage.getItem('userHandle');
-    useEffect(() => {
-        load();
-    }, [])
+    // const [loading, setLoading] = useState(false);
+    // const [blogs, setBlogs] = useState([])
+    // useEffect(() => {
+    //     // load();
+    //     onSetBlogs();
+    // }, [])
 
-    async function load() {
-        setLoading(true)
-        await props.getUser(userHandle).then(() => {
-            setLoading(false)
-        })
-    }
+    // // async function load() {
+    // //     setLoading(true)
+    // //     await props.getUser(userHandle).then(() => {
+    // //         setLoading(false)
+    // //     })
+    // // }
+    // const onSetBlogs = () => {
+    //     setBlogs(props.blogs)
+    // }
+    
     return (
         <div>
-            {console.log(props.blog)}
-             {loading ? (<p>No blogs</p>) : (props.blogs.map((blog) => {
+             {props.blogs.length === 0 ? (<p>no blogs..</p>) : (props.blogs.map((blog) => {
                 return <BlogListItem key={blog.id} {...blog} />
             }))}
         </div>
@@ -30,7 +34,10 @@ export const MyBlogList = (props) => {
 
 const mapStateToProps = (state) => ({
     userHandle: state.auth.userHandle,
-    blogs: state.blogs.find((blog) => blog.userHandle === 'ajay_LFC')
+    blogs: state.blogs.filter((blog) => {
+        if(blog.userHandle === state.auth.userHandle)
+            return blog;
+    })
 });
 const mapDispatchToProps = (dispatch) => ({
     getUser: (userHandle) => dispatch(startGetUser(userHandle)),

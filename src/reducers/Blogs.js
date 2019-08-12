@@ -13,7 +13,7 @@ const blogsReducer = (state = [], action) => {
                 if(action.id === blog.id){
                     return{
                         ...blog,
-                        ...action.updates
+                        ...action.update
                     }
                 };
                     return blog;
