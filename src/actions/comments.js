@@ -9,7 +9,7 @@ export const getComments = (comments) => {
 
 export const startGetComments = (id) => {
     return (dispatch) => {
-        return axios.get(`${id}/comments`).then(res => {
+        return axios.get(`../blog/${id}/comments`).then(res => {
             dispatch(getComments(res.data));
         })
     }

@@ -1,43 +1,44 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import moment from 'moment';
 import {connect} from 'react-redux';
+import Link from 'react-router-dom/Link'
 import {setLikeBlog, setUnLikeBlog} from '../actions/blogs';
-import {startGetComments} from '../actions/comments'
+import Comments from './Comments'
 export const BlogCard = (props) => {
+    const [likeCount, setLikeCount] = useState(props.blog.likeCount)
     const id = props.match.params.id
-    useEffect(() =>{
-        props.getComments(id);
-    },[])
-
     const onClickLike = () => {
-        props.likeBlog(id);
-    }
+        props.likeBlog(id).then(() => {
+            setLikeCount(props.blog.likeCount)
+
+        });
+    };
     const onClickUnLike = () => {
-        props.unLikeBlog(id);
-    }
+        props.unLikeBlog(id).then(() => {
+            setLikeCount(props.blog.likeCount)
+
+        });
+    };
     return(
         <div>
+            {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
+            <button>Edit</button>
+            </Link>
+            }
             <h2>{props.blog.title}</h2><p>By: {props.blog.userHandle}</p> <p>{moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
             <p>{props.blog.description}</p>
             <button 
-            onClick={onClickLike}>Like{props.blog.likeCount}
+            onClick={onClickLike}>Like{likeCount}
             </button>
             <button 
             onClick={onClickUnLike}>Unlike
             </button>
-            <ul>
-                comments:
-            {props.comments.map(comment => {
-                return <li>{comment.body}</li>
-            })}
-            </ul>
-
+            <Comments commentCount={props.blog.commentCount} id={id} />
         </div>
     )
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    getComments: (blogId) => dispatch(startGetComments(blogId)),
     likeBlog: (blogId) => dispatch(setLikeBlog(blogId)),
     unLikeBlog: (blogId) => dispatch(setUnLikeBlog(blogId)),
     
@@ -45,7 +46,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = (state, props) => ({
     blog: state.blogs.find((blog) => blog.id === props.match.params.id),
-    comments: state.comments
+    userHandle : state.auth.userHandle
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(BlogCard);

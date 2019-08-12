@@ -9,6 +9,7 @@ const Header = (props) => (
         <button onClick={props.logout}>Logout</button>
         <NavLink to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
         <NavLink to="/add" activeClassName="is-active">Add Blog</NavLink>
+        <NavLink to="/myblogs" activeClassName="is-active">My Blogs</NavLink>
     </div>
 )
 const mapDispatchToProps = (dispatch) => {

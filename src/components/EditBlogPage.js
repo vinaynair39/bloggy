@@ -1,29 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import BlogForm from './BlogForm'
 import {connect} from 'react-redux';
 import {startEditBlog} from '../actions/blogs'
 import {startRemoveBlog} from '../actions/blogs';
 
 
-export class EditBlogPage extends React.Component {
+const EditBlogPage= (props) => {
 
-    onSubmit = (blog) => {
-        this.props.editBlog(this.props.blog.id, blog);
+    const [update, setUpdate] = useState(props.blog);
+
+    const onSubmit = (blog) => {
+        setUpdate(props.blog)
+        props.editBlog(props.blog.id, update);
+        
     }
 
-    removeBlog = () => {
-        this.props.removeBlog(this.props.blog.id);
+    const removeBlog = () => {
+        if(window.confirm('Are you sure you want to delete this blog?'))
+            props.removeBlog(props.blog.id);
     }
-    render(){
-        return(
-            <div>
-                <button onClick={this.removeBlog}>Remove</button>
-                <BlogForm onSubmit = {this.onSubmit}
-                blog={this.props.blog}/>
-                
-            </div>
-        )
-    }
+
+    return(
+        <div>
+            <button onClick={removeBlog}>Remove</button>
+            <BlogForm onSubmit = {onSubmit}
+            blog={props.blog}/>
+            
+        </div>
+    )
 }
 
 

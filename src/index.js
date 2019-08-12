@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import AppRouter from './routers/AppRouter';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
-import {login, logout} from './actions/auth';
+import {login, logout, startGetUserHandle} from './actions/auth';
 import {startSetBlogs} from './actions/blogs';
 import {history} from './routers/AppRouter';
 import jwtDecode from 'jwt-decode';
@@ -14,6 +14,7 @@ import './styles/styles.scss';
 import './index.css';
 
 const store = configureStore();
+
 
 const jsx = (
     <Provider store={store}>
@@ -40,9 +41,9 @@ if (token) {
         history.push('/');
     }
     else {
-    console.log("hello boi");
     store.dispatch(login());
     axios.defaults.headers.common['Authorization'] = token;
+    store.dispatch(startGetUserHandle());
     store.dispatch(startSetBlogs()).then(() => {
         renderApp();
         if (history.location.pathname === '/') {

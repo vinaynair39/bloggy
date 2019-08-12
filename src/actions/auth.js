@@ -1,4 +1,3 @@
-import {firebase} from '../firebase/firebase';
 import axios from 'axios'
 import {startSetBlogs} from './blogs'
 import {history} from '../routers/AppRouter';
@@ -25,12 +24,14 @@ export const startLogin =  (credentials) => {
         dispatch({type: 'LOADING_UI'});
         return axios.post('/login', credentials).then(res => {
             setAuthorizationHeader(res.data.token);
-            dispatch(login());
             dispatch({type: 'UNLOADING_UI'});
+            dispatch(login());
+            dispatch(startGetUserHandle());
             dispatch(startSetBlogs()).then(() => {
                 if (history.location.pathname === '/') {
                     history.push('/dashboard');
                   }
+            
             })
             }).catch(err => {
                 dispatch({
@@ -52,4 +53,38 @@ const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`;
     sessionStorage.setItem('FBIdToken', FBIdToken);
     axios.defaults.headers.common['Authorization'] = FBIdToken;
+    axios.defaults.headers = {"Access-Control-Allow-Origin": "*"};
 };
+
+export const getUserHandle =  (userHandle) => {
+    return{
+        type: 'GET_USERHANDLE',
+        userHandle
+    };
+};
+export const startGetUserHandle =  () => {
+    return (dispatch) => {
+        return axios.get('/user').then(res => {
+            dispatch(getUserHandle(res.data.credentials.userHandle))
+            sessionStorage.setItem('userHandle', res.data.credentials.userHandle)
+        }).catch(err => console.log(err.response))
+    }
+};
+
+
+export const getUser =  (user) => {
+    return{
+        type: 'GET_USER',
+        user
+    };
+};
+export const startGetUser =  (userHandle) => {
+    return (dispatch) => {
+        dispatch({type: 'LOADING_UI'});
+        return axios.get(`/user/${userHandle}`).then(res => {
+            dispatch(getUser(res.data))
+            dispatch({type: 'UNLOADING_UI'});
+        }).catch(err => console.log(err.response))
+    }
+};
+

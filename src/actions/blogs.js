@@ -1,6 +1,6 @@
-import  database  from '../firebase/firebase';
 import {history} from '../routers/AppRouter';
 import axios from 'axios';
+
 
 
 export const addBlog = (blog) => ({
@@ -10,7 +10,7 @@ export const addBlog = (blog) => ({
 
 export const startAddBlog = (blogData = {}) => {
     return (dispatch,getState) => {
-        axios.post('/add', blogData).then((res) => {
+        axios.post('../../add', blogData).then((res) => {
             dispatch(addBlog(res.data));
         }).catch(err => {
             console.log(err.response)
@@ -25,10 +25,11 @@ export const removeBlog = (id) => ({
 
 export const startRemoveBlog = (id) => {
     return (dispatch, getState) => {
-        const uid = getState().auth.uid;
-        database.collection(`blogList/users/${uid}`).doc(id).delete().then(() => {
-            dispatch(removeBlog(id));
-        }).then(() => history.push('/'));
+        axios.delete(`../../blog/${id}/delete`).then((res) => {
+            dispatch(removeBlog(id))
+            window.alert(res.data.success);
+            history.push('/dashboard');
+        })
     }
 }
 
@@ -39,12 +40,11 @@ export const editBlog = (id, update) => ({
 });
 
 export const startEditBlog = (id, update={}) => {
-    return (dispatch,getState) => {
-        const uid = getState().auth.uid;
-        return database.collection(`blogList/users/${uid}`).doc(id).update({
-            ...update
-        }).then(ref => {
+    return (dispatch) => {
+        axios.post(`../../blog/${id}/edit`, update).then(res => {
             dispatch(editBlog(id, update))
+            history.goBack();
+            return res.data;
         })
     }
 

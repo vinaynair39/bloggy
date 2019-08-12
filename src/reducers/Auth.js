@@ -1,6 +1,11 @@
 const initialState = {
     isAuthenticated: false,
     loading: false,
+    userHandle: '',
+    user: {
+        user: {},
+        blogs: []
+    }
 }
 
 const authReducer = (state=initialState , action) => {
@@ -13,6 +18,17 @@ const authReducer = (state=initialState , action) => {
         case 'LOGOUT':
             return {
                 isAuthenticated:false
+            };
+
+        case 'GET_USERHANDLE':
+            return {
+               ...state,
+               userHandle: action.userHandle
+            };
+        case 'GET_USER':
+            return {
+                ...state,
+                user: action.user
             };
         case 'LOADING_UI':
             return {
