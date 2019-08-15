@@ -13,8 +13,9 @@ export const AddComment = (props) => {
     const onAdd = () => {
         props.addComment(props.id,{comment} )
         onClick();
-        setComment('');
     }
+    
+    
     
     return(
         <div>

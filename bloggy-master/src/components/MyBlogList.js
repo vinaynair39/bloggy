@@ -6,9 +6,12 @@ import {startGetUser} from '../actions/auth';
 
 export const MyBlogList = (props) => {
 
-    useEffect(() => {
-        props.getUser(props.userHandle)
-    }, [])
+    // const [loading, setLoading] = useState(false);
+    // const [blogs, setBlogs] = useState([])
+    // useEffect(() => {
+    //     // load();
+    //     onSetBlogs();
+    // }, [])
 
     // // async function load() {
     // //     setLoading(true)
@@ -31,7 +34,6 @@ export const MyBlogList = (props) => {
 
 const mapStateToProps = (state) => ({
     userHandle: state.auth.userHandle,
-    // blogs: state.auth.user
     blogs: state.blogs.filter((blog) => {
         if(blog.userHandle === state.auth.userHandle)
             return blog;

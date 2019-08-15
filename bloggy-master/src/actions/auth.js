@@ -25,15 +25,14 @@ export const startLogin =  (credentials) => {
         return axios.post('/login', credentials).then(res => {
             setAuthorizationHeader(res.data.token);
             dispatch({type: 'UNLOADING_UI'});
-            dispatch(startGetUserHandle()).then(() => {
-                dispatch(login());
-                dispatch(startSetBlogs()).then(() => {
-                    if (history.location.pathname === '/') {
-                        history.push('/dashboard');
-                    }
-            })
-            })
+            dispatch(login());
+            dispatch(startGetUserHandle());
+            dispatch(startSetBlogs()).then(() => {
+                if (history.location.pathname === '/') {
+                    history.push('/dashboard');
+                  }
             
+            })
             }).catch(err => {
                 dispatch({
                     type: 'SET_ERRORS',
@@ -45,16 +44,16 @@ export const startLogin =  (credentials) => {
 export const startLogout = () => {
     return (dispatch) => {
         sessionStorage.removeItem('FBIdToken');
-        sessionStorage.removeItem('userHandle');
         delete axios.defaults.headers.common['Authorization'];
         dispatch(logout());
     };
 };
 
-function setAuthorizationHeader(token){
+const setAuthorizationHeader = (token) => {
     const FBIdToken = `Bearer ${token}`;
     sessionStorage.setItem('FBIdToken', FBIdToken);
     axios.defaults.headers.common['Authorization'] = FBIdToken;
+    axios.defaults.headers = {"Access-Control-Allow-Origin": "*"};
 };
 
 export const getUserHandle =  (userHandle) => {
@@ -65,9 +64,9 @@ export const getUserHandle =  (userHandle) => {
 };
 export const startGetUserHandle =  () => {
     return (dispatch) => {
-        return axios.get('/userHandle').then(async res => {
-            dispatch(getUserHandle(res.data))
-            await sessionStorage.setItem('userHandle', res.data)
+        return axios.get('/user').then(res => {
+            dispatch(getUserHandle(res.data.credentials.userHandle))
+            sessionStorage.setItem('userHandle', res.data.credentials.userHandle)
         }).catch(err => console.log(err.response))
     }
 };
@@ -89,19 +88,3 @@ export const startGetUser =  (userHandle) => {
     }
 };
 
-
-export const getAuthenticatedUser =  (user) => {
-    return{
-        type: 'GET_AUTHENTICATED_USER',
-        user
-    };
-};
-export const startGetAuthenticatedUser =  (userHandle) => {
-    return (dispatch) => {
-        dispatch({type: 'LOADING_UI'});
-        return axios.get(`/user/${userHandle}`).then(res => {
-            dispatch(getUser(res.data))
-            dispatch({type: 'UNLOADING_UI'});
-        }).catch(err => console.log(err.response))
-    }
-};
