@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {connect} from 'react-redux';
 import BlogListItem from './BlogListItem';
-import {startGetUser} from '../actions/auth';
+import {startGetUserBlogs} from '../actions/auth';
 
 
 export const MyBlogList = (props) => {
 
     useEffect(() => {
-        props.getUser(props.userHandle)
+        props.getUserBlogs(props.userHandle)
     }, [])
 
     // // async function load() {
@@ -31,14 +31,14 @@ export const MyBlogList = (props) => {
 
 const mapStateToProps = (state) => ({
     userHandle: state.auth.userHandle,
-    // blogs: state.auth.user
-    blogs: state.blogs.filter((blog) => {
-        if(blog.userHandle === state.auth.userHandle)
-            return blog;
-    })
+    blogs: state.auth.userBlogs ? state.auth.userBlogs : []
+    // blogs: state.blogs.filter((blog) => {
+    //     if(blog.userHandle === state.auth.userHandle)
+    //         return blog;
+    // })
 });
 const mapDispatchToProps = (dispatch) => ({
-    getUser: (userHandle) => dispatch(startGetUser(userHandle)),
+    getUserBlogs: (userHandle) => dispatch(startGetUserBlogs(userHandle)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyBlogList);

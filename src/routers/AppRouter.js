@@ -10,13 +10,19 @@ import MyBlogsPage from '../components/MyBlogsPage';
 import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import BlogCard from '../components/BlogCard'
+import SignupPage from '../components/SignupPage';
+import EditUserDetails from '../components/EditUserDetails'
+import UserDetails from '../components/UserDetails'
 
 export const history = createHistory();
 const AppRouter = () => (
     <Router history={history}>
         <Switch>
             <PublicRoute path='/' component={LoginPage} exact={true}></PublicRoute>
+            <PublicRoute path='/signup' component={SignupPage}></PublicRoute>
             <PrivateRoute path='/dashboard' component={DashboardPage}></PrivateRoute>
+            <PrivateRoute path='/user' component={UserDetails}></PrivateRoute>
+            <PrivateRoute path='/edit' component={EditUserDetails}></PrivateRoute>
             <PrivateRoute path='/myblogs' component={MyBlogsPage}></PrivateRoute>
             <PrivateRoute path='/blog/:id' component={BlogCard}></PrivateRoute>
             <PrivateRoute path='/add' component={AddBlogPage}></PrivateRoute>

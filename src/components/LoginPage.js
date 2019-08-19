@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { startLoginUsingGoogle, startLogin } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
+import {Link} from 'react-router-dom';
 import {history} from '../routers/AppRouter';
-export const LoginPage = ({ startLogin, startLoginUsingGoogle, error}) => {
+export const LoginPage = ({ startLogin, error}) => {
 
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
@@ -35,7 +36,7 @@ export const LoginPage = ({ startLogin, startLoginUsingGoogle, error}) => {
                     <button>Login</button>
                     {error && <p>{error}</p>}
                 </form>
-                <button className="button" onClick={startLoginUsingGoogle}>Login with Google</button>
+                <h6>Not Registered?</h6> <Link to='/signup'><button className="button">Sign Up</button></Link>
             </div>
         </div>
     )

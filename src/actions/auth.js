@@ -12,6 +12,38 @@ export const logout =  () => {
         type: 'LOGOUT',
     };
 };
+
+export const signup = () => {
+    return {
+        type: 'SIGNUP'
+    };
+}
+
+export const startSignUp = (credentials) => {
+    return (dispatch) => {
+        dispatch({type: 'LOADING_UI'});
+        axios.post('/signup', credentials).then((res) => {
+            setAuthorizationHeader(res.data.token);
+            dispatch({type: 'UNLOADING_UI'});
+            dispatch(startGetUserHandle()).then(() => {
+                dispatch(login());
+                dispatch(startSetBlogs()).then(() => {
+                    if (history.location.pathname === '/') {
+                        history.push('/dashboard');
+                    }
+            })
+            })
+            
+            }).catch(err => {
+                console.log(err.response)
+                dispatch({
+                    type: 'SET_ERRORS',
+                    error: err.response ? (err.response.data.general || err.response.data.email || err.response.data.password) : ''
+                })
+            });
+
+    }
+}
 export const startLoginUsingGoogle =  () => {
     return () => {
         axios.post('/signin').catch(err => {
@@ -24,10 +56,11 @@ export const startLogin =  (credentials) => {
         dispatch({type: 'LOADING_UI'});
         return axios.post('/login', credentials).then(res => {
             setAuthorizationHeader(res.data.token);
-            dispatch({type: 'UNLOADING_UI'});
             dispatch(startGetUserHandle()).then(() => {
                 dispatch(login());
+                dispatch(startGetAuthenticatedUser());
                 dispatch(startSetBlogs()).then(() => {
+                    dispatch({type: 'UNLOADING_UI'});
                     if (history.location.pathname === '/') {
                         history.push('/dashboard');
                     }
@@ -73,35 +106,68 @@ export const startGetUserHandle =  () => {
 };
 
 
-export const getUser =  (user) => {
+export const getUserBlogs =  (blogs) => {
     return{
-        type: 'GET_USER',
-        user
+        type: 'GET_USER_BLOGS',
+        blogs
     };
 };
-export const startGetUser =  (userHandle) => {
+export const startGetUserBlogs =  (userHandle) => {
     return (dispatch) => {
         dispatch({type: 'LOADING_UI'});
-        return axios.get(`/user/${userHandle}`).then(res => {
-            dispatch(getUser(res.data))
+        return axios.get(`/user/${userHandle}`).then(({data}) => {
+            dispatch(getUserBlogs(data.blogs))
             dispatch({type: 'UNLOADING_UI'});
         }).catch(err => console.log(err.response))
     }
 };
 
 
-export const getAuthenticatedUser =  (user) => {
+export const getAuthenticatedUser =  (user, notifications) => {
     return{
         type: 'GET_AUTHENTICATED_USER',
-        user
+        user,
+        notifications
     };
 };
-export const startGetAuthenticatedUser =  (userHandle) => {
+export const startGetAuthenticatedUser =  () => {
     return (dispatch) => {
-        dispatch({type: 'LOADING_UI'});
-        return axios.get(`/user/${userHandle}`).then(res => {
-            dispatch(getUser(res.data))
-            dispatch({type: 'UNLOADING_UI'});
+        return axios.get(`/user`).then(res => {
+            dispatch(getAuthenticatedUser(res.data.credentials, res.data.notifications))
+        }).catch(err => console.log(err.response))
+    }
+};
+
+
+export const addUserData = (details) => {
+    return {
+        type: "ADD_USER_DETAILS",
+        details
+    };
+}
+
+export const startAddUserDetails =  (details) => {
+    return (dispatch) => {
+        return axios.post(`/user`, details).then(res => {
+            dispatch(addUserData(details));
+            history.goBack();
+        }).catch(err => console.log(err.response))
+    }
+};
+
+export const addUserImage = (imageUrl) => {
+    return {
+        type: "ADD_USER_IMAGE",
+        imageUrl
+    };
+}
+
+export const startAddUserImage =  (formData) => {
+    return (dispatch) => {
+        return axios.post(`/user/image`, formData).then(res => {
+            console.log('hi')
+            dispatch(addUserImage(res.data.imageUrl));
+            // history.goBack();
         }).catch(err => console.log(err.response))
     }
 };

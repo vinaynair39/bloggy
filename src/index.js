@@ -4,7 +4,7 @@ import * as serviceWorker from './serviceWorker';
 import AppRouter from './routers/AppRouter';
 import {Provider} from 'react-redux';
 import configureStore from './store/configureStore';
-import {login, logout, startGetUserHandle} from './actions/auth';
+import {login, logout, startGetUserHandle, startGetAuthenticatedUser} from './actions/auth';
 import {startSetBlogs} from './actions/blogs';
 import {history} from './routers/AppRouter';
 import jwtDecode from 'jwt-decode';
@@ -32,7 +32,6 @@ const renderApp = () => {
 
 ReactDOM.render(<p>Loading...</p>, document.getElementById('root'));
 const token = sessionStorage.getItem('FBIdToken');
-console.log('miki' +token)
 if (token) {
     const decodedToken = jwtDecode(token);
     if (decodedToken.exp * 1000 < Date.now()) {
@@ -44,6 +43,7 @@ if (token) {
     store.dispatch(login());
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch(startGetUserHandle());
+    store.dispatch(startGetAuthenticatedUser());
     store.dispatch(startSetBlogs()).then(() => {
         renderApp();
         if (history.location.pathname === '/') {

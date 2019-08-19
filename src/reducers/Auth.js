@@ -2,10 +2,9 @@ const initialState = {
     isAuthenticated: false,
     loading: false,
     userHandle: '',
-    user: {
-        user: {},
-        blogs: []
-    }
+    userBlogs: [],
+    user: {},
+    notifications: []
 }
 
 const authReducer = (state=initialState , action) => {
@@ -25,11 +24,35 @@ const authReducer = (state=initialState , action) => {
                ...state,
                userHandle: action.userHandle
             };
-        case 'GET_USER':
+        case 'GET_USER_BLOGS':
             return {
                 ...state,
-                user: action.user
+                userBlogs: action.blogs.map(blog => blog)
             };
+        case 'ADD_USER_IMAGE':
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    imageUrl: action.imageUrl
+                }
+            }
+        case 'ADD_USER_DETAILS':
+           return {
+               ...state,
+               user: {
+                   ...state.user,
+                   bio: action.details.bio,
+                   website: action.details.website
+               }
+           }
+        case 'GET_AUTHENTICATED_USER':
+            return {
+                ...state,
+                user: action.user,
+                notifications: action.notifications
+            }
+        
         case 'LOADING_UI':
             return {
                 ...state,

@@ -14,7 +14,6 @@ export const Comments = ({comments,getComments, id}) => {
     }
     return(
         <div>
-            {console.log(comments)}
             <AddComment id={id}/>
             <button disabled={comments.length === 0} onClick={onClick}>{toggle ? 'close comments' : `View all ${comments.length === 0  ? '': comments.length} comments`}</button>
                 
