@@ -21,7 +21,7 @@ export const EditUserDetails = ({user, addUserDetails, addUserImage}) => {
     const onImageChange = (e) => {
         const image = e.target.files[0];
         const formData = new FormData();
-        console.log(formData);
+        console.log(image);
         formData.append('image', image, image.name);
         addUserImage(formData)
         

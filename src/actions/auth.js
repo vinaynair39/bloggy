@@ -150,7 +150,7 @@ export const startAddUserDetails =  (details) => {
     return (dispatch) => {
         return axios.post(`/user`, details).then(res => {
             dispatch(addUserData(details));
-            history.goBack();
+            // history.goBack();
         }).catch(err => console.log(err.response))
     }
 };
@@ -158,15 +158,14 @@ export const startAddUserDetails =  (details) => {
 export const addUserImage = (imageUrl) => {
     return {
         type: "ADD_USER_IMAGE",
-        imageUrl
+        imageUrl: imageUrl
     };
 }
 
 export const startAddUserImage =  (formData) => {
     return (dispatch) => {
         return axios.post(`/user/image`, formData).then(res => {
-            console.log('hi')
-            dispatch(addUserImage(res.data.imageUrl));
+            dispatch(addUserImage(res.data));
             // history.goBack();
         }).catch(err => console.log(err.response))
     }
