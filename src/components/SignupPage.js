@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import {startSignUp } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
+import Tilt from 'react-tilt';
 export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
 
     const [email, getEmail] = useState('');
@@ -52,27 +53,33 @@ export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
 
 }
     return(
-          <div>
-            <div >
-                <h1>Blogacy</h1>
-                <p>Read, Write and Grow</p>
-                <span >
-			        Member Login
-		        </span>
-                <form onSubmit={onStartSignUp}>
-                    <label>User Handle:</label><input type="text" value={userHandle}  
-                    onChange={e => (getUserHandle(e.target.value))}/>
-                    <label>Email:</label><input  type="email" value={email}
-                    onChange={e => (getEmail(e.target.value))}/>
-                    <label>Password:</label><input type="password" value={password}  
-                    onChange={e => (getPassword(e.target.value))}/>
-                    <label>Confirm Password:</label><input type="password" value={confirmPassword}  
-                    onChange={e => (getConfirmPassword(e.target.value))}/>
-                    <label>Password:</label><input type="text" value={name}  
-                    onChange={e => (getName(e.target.value))}/>
-                    <button className="button">Sign Up</button>
-                    {error && <p>{error}</p>}
-                </form>
+          <div className="box-layout">
+            <div className="box-layout__signup-box animated fadeInDown delay-1s">
+                <Tilt className="Tilt" options={{ max : 25 }} >
+                    <h1 className="box-layout__title animated flash delay-2s">Blogacy</h1>
+                </Tilt>
+                <h2 className="box-layout__subtitle">Read, Write and Grow</h2>
+                <div className="box-layout__form">
+                    {error.length > 0 && alert(error)}
+                    <form onSubmit={onStartSignUp}>
+                       <input type="text" value={userHandle}  
+                        placeholder="Enter your user Handle"
+                        onChange={e => (getUserHandle(e.target.value))}/>
+                        <input  type="email" value={email}
+                        placeholder="email"
+                        onChange={e => (getEmail(e.target.value))}/>
+                        <input type="password" value={password}  
+                        placeholder="Password"
+                        onChange={e => (getPassword(e.target.value))}/>
+                        <input type="password" value={confirmPassword}  
+                        placeholder="confirm Password"
+                        onChange={e => (getConfirmPassword(e.target.value))}/>
+                        <input type="text" value={name}  
+                        placeholder="Name"
+                        onChange={e => (getName(e.target.value))}/>
+                        <button className="button-primary">Sign Up</button>
+                    </form>
+                </div>
             </div>
         </div>
     )

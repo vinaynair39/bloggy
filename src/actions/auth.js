@@ -150,7 +150,7 @@ export const startAddUserDetails =  (details) => {
     return (dispatch) => {
         return axios.post(`/user`, details).then(res => {
             dispatch(addUserData(details));
-            // history.goBack();
+            history.goBack();
         }).catch(err => console.log(err.response))
     }
 };

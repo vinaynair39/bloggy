@@ -22,7 +22,7 @@ const AppRouter = () => (
             <PublicRoute path='/signup' component={SignupPage}></PublicRoute>
             <PrivateRoute path='/dashboard' component={DashboardPage}></PrivateRoute>
             <PrivateRoute path='/user' component={UserDetails}></PrivateRoute>
-            <PrivateRoute path='/edit' component={EditUserDetails}></PrivateRoute>
+            <PrivateRoute path='/edit' component={EditUserDetails} exact={true}></PrivateRoute>
             <PrivateRoute path='/myblogs' component={MyBlogsPage}></PrivateRoute>
             <PrivateRoute path='/blog/:id' component={BlogCard}></PrivateRoute>
             <PrivateRoute path='/add' component={AddBlogPage}></PrivateRoute>

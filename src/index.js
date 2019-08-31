@@ -10,8 +10,10 @@ import {history} from './routers/AppRouter';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import 'normalize.css/normalize.css';
+import 'animate.css';
 import './styles/styles.scss';
-import './index.css';
+
+
 
 const store = configureStore();
 

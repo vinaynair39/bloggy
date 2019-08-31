@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import blogReducer from '../reducers/Blogs';
 import authReducer from '../reducers/Auth';
 import commentsReducer from '../reducers/Comments'
-// import filtersReducer from '../Reducers/Filters';
+import filterReducer from '../reducers/Filters';
 // import authReducer from '../Reducers/Auth';
 
 
@@ -14,7 +14,8 @@ export default () => {
     combineReducers({
       blogs: blogReducer,
       auth: authReducer,
-      comments: commentsReducer
+      comments: commentsReducer,
+      filters: filterReducer
     }),
     composeEnhancers(applyMiddleware(thunk))
   );

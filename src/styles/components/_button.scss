@@ -1,15 +1,52 @@
-.button {
-  background: $blue;
+.button-primary{
+  background: $dark-grey;
   border: none;
   color: white;
   display: inline-block;
   font-size: $font-size-large;
   font-weight: 300;
   line-height: 1;
-  padding: $s-size;
+  padding: $s-size $l-size;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
   text-decoration: none;
+  outline: none;
+  font-family: 'Livvic', sans-serif;
+
 }
 
+.button-primary__login{
+  margin-bottom: 1rem;
+}
+.button-secondary{
+  background: $dark-grey;
+  border: none;
+  font-family: 'Livvic', sans-serif;
+  color: white;
+  display: inline-block;
+  font-size: $font-size-large;
+  font-weight: 300;
+  line-height: 1;
+  padding: $s-size 2.6rem;
+  text-decoration: none;
+  border-radius: 10px;
+  outline: none;
+}
+
+.button-secondary:hover {
+  padding: $s-size 4rem;
+}
+.button-primary:hover {
+  padding: $s-size 4rem;
+}
+.button-primary:active {
+  box-shadow: 0 5px darken($dark-grey, $amount: 2);
+  transform: translateY(4px);
+}
+.button-secondary:active {
+  box-shadow: 0 5px darken($dark-grey, $amount: 2);
+  transform: translateY(4px);
+}
 .button--link {
   background: none;
 }

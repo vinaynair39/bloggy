@@ -18,17 +18,32 @@ const Header = (props) =>{
         })
     }
     return (
-        <div>
-            <h1>Bloggy</h1>
-            <button onClick={props.logout}>Logout</button>
-            <NavLink to="/dashboard" activeClassName="is-active">Dashboard</NavLink>
-            <NavLink to="/add" activeClassName="is-active">Add Blog</NavLink>
-            <NavLink to="/myblogs" activeClassName="is-active">My Blogs</NavLink>
-            <NavLink to="/user" activeClassName="is-active">{props.userHandle}</NavLink>
-            <button onClick={onClick}>Notifications</button>
-            {toggle && <ul>{getNotifications()}</ul>}
+        <div className="header">
+            <div className="header__content">
+                <div >
+                    <Link to="/dashboard" className="header__title"><h1 >Bloggy</h1></Link>
+                </div>
+                <nav role="navigation">
+                    <div className="header__links">
+                        <input type="checkbox" id="toggle"/>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    
+                        <ul className="menu">
+                            <NavLink to="/add" activeClassName="is-active">Add Blogs</NavLink>
+                            <NavLink to="/myblogs" activeClassName="is-active">My Blogs</NavLink>
+                            <NavLink to="/user" activeClassName="is-active">{props.userHandle}</NavLink>
+                            <button onClick={props.logout}>Logout</button>
+                            <button onClick={onClick}>Notifications</button> 
+                        </ul>  
+                    </div>
+                </nav>
+                {toggle && <ul>{getNotifications()}</ul>}
+            </div>
+            </div>
             
-        </div>
+            
     );
 }
 

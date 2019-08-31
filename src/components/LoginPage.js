@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import { connect } from 'react-redux';
 import { startLoginUsingGoogle, startLogin } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
-import {Link} from 'react-router-dom';
-import {history} from '../routers/AppRouter';
+import Link from 'react-router-dom/Link';
+import Tilt from 'react-tilt';
 export const LoginPage = ({ startLogin, error}) => {
 
     const [email, getEmail] = useState('');
@@ -15,28 +15,35 @@ export const LoginPage = ({ startLogin, error}) => {
                 email,
                 password
             };
+            
             startLogin(credentials).then(() => {
-                console.log('bitch')
             })
         }
     }
     return(
-          <div>
-            <div >
-                <h1>Blogacy</h1>
-                <p>Read, Write and Grow</p>
-                <span >
-			        Member Login
-		        </span>
-                <form onSubmit={onStartLogin}>
-                    <label>Email:</label><input  type="email" value={email}
-                    onChange={e => (getEmail(e.target.value))}/>
-                    <label>Password:</label><input type="password" value={password}  
-                    onChange={e => (getPassword(e.target.value))}/>
-                    <button>Login</button>
-                    {error && <p>{error}</p>}
-                </form>
-                <h6>Not Registered?</h6> <Link to='/signup'><button className="button">Sign Up</button></Link>
+          <div className="box-layout">
+            <div className="box-layout__box animated fadeInDown delay-1s">
+                <Tilt className="Tilt" options={{ max : 25 }} >
+                    <h1 className="box-layout__title animated flash delay-2s">Blogacy</h1>
+                </Tilt>
+                <h2 className="box-layout__subtitle">Read, Write and Grow</h2>
+                <div className="box-layout__form">
+                    <form onSubmit={onStartLogin}>
+                        <input  type="email" value={email}
+                        onChange={e => (getEmail(e.target.value))}
+                        placeholder="email"
+                        className="animated fadeInLeft delay-2s"
+                        />
+                        <input type="password" value={password}  
+                        onChange={e => (getPassword(e.target.value))}
+                        placeholder={error ? <p>{error}</p> : "password"}
+                        className="animated fadeInRight delay-2s"
+                        />
+                        <button className="button-primary button-primary__login ">Login</button>
+                    </form>
+                    {error && alert(error)}
+                    <h6 className="box-layout__question animated infinite pulse">Not Registered?</h6> <Link to='/signup'><button className="button-secondary">Sign Up</button></Link>
+                </div>
             </div>
         </div>
     )
