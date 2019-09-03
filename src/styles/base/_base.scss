@@ -4,6 +4,8 @@
 
 html {
   font-size: 62.5%;
+  outline: none;
+  
 }
 
 body {
@@ -11,6 +13,7 @@ body {
   font-family: 'Livvic', sans-serif;
   font-size: $m-size;
   line-height: 1.6;
+  
 }
 
 button {
@@ -27,11 +30,6 @@ button:disabled {
 a
 {
   text-decoration: none;
-  color: #232323;
   transition: color 0.3s ease;
 }
 
-a:hover
-{
-  color: $pink;
-}

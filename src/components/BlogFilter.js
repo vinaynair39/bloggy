@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { setTextFilter, sortByDate, sortByLikes} from '../actions/filters';
+import {faHeart, faTable} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const BlogFilter = (props) => {
     return (
@@ -8,6 +10,7 @@ const BlogFilter = (props) => {
         <div className="input-group__item">
           <input
             type="text"
+            placeholder="Search Blog"
             value={props.filters.text}
             onChange={(e) => {
               props.dispatch(setTextFilter(e.target.value));
@@ -15,20 +18,22 @@ const BlogFilter = (props) => {
           />
         </div>
         <div className="input-group__item">
-          <select
-            value={props.filters.sortBy}
-            onChange={(e) => {
-              if (e.target.value === 'date') {
-                props.dispatch(sortByDate());
-              } else if (e.target.value === 'likes') {
-                props.dispatch(sortByLikes());
-              }
-            }}
-          >
-          <option value="likes">Likes</option>
-          <option value="date">Recent</option>
-            
-          </select>
+        <div class="inner">
+        <div class="item">
+          <input type="radio" id="male" name="gender" value="male" checked={props.filters.sortBy === 'likes'} 
+          onClick ={() => {
+            props.dispatch(sortByLikes());
+          }}/>
+          <label title="Sort by Likes" for="male"><FontAwesomeIcon icon={faHeart}/></label>
+        </div>
+        <div class="item">
+          <input type="radio" id="female" name="gender" value="female" checked={props.filters.sortBy === 'date'}
+          onClick ={() => {
+            props.dispatch(sortByDate());
+          }}/>
+          <label title="Recent" for="female"><FontAwesomeIcon icon={faTable}/></label>
+        </div>
+      </div>
         </div>
       </div>
     );

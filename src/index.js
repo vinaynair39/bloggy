@@ -12,6 +12,9 @@ import axios from 'axios';
 import 'normalize.css/normalize.css';
 import 'animate.css';
 import './styles/styles.scss';
+// import 'semantic-ui-css/semantic.min.css';
+
+
 
 
 

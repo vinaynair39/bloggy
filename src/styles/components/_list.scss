@@ -3,22 +3,29 @@
   border: 1px solid darken($off-white, 7%);
   color: $grey;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-items: center;
   padding: $s-size $m-size;
 }
+
 
 .list-body {
   margin-bottom: $m-size;
   @media (min-width: $desktop-breakpoint) {
     margin-bottom: $l-size;
+    border: 2px solid $m;
+    border-radius: 2rem;
+
   }
 }
 
 .list-item {
+  
   border: 1px solid darken($off-white, 7%);
   border-top: none;
   color: $dark-grey;
   display: flex;
+  border-radius: 2rem;
   flex-direction: column;
   padding: $s-size;
   text-decoration: none;
@@ -30,6 +37,8 @@
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+    border-radius: 2rem;
+
     padding: $m-size;
   }
 }

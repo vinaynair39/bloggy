@@ -5,11 +5,18 @@ import {startAddBlog} from '../actions/blogs'
 
 export const AddBlogPage = ({addBlog, history}) => (
     <div>
-        Add Blog page
+        <div className="page-header">
+            <div className="content-container">
+            <h1>Add Blog page</h1>
+            </div>
+        </div>
+        <div className="content-container">
         <BlogForm onSubmit = {(blog) => {
             addBlog(blog);
             history.push('/');
             }}/>
+        </div>
+       
     </div>
 );
 

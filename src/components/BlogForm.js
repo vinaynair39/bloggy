@@ -33,22 +33,22 @@ export default class BlogForm extends Component {
       };
     render(){
         return(
-            <div>
-                {this.state.error && <p>{this.state.error}</p>}
-                <form action="" onSubmit={this.onSubmit}>
-                    <input type="text" 
-                    placeholder='Enter the title here' 
-                    value={this.state.title}
-                    onChange={this.onTitleChange}
-                    />
-                    <textarea name="" id="" cols="30" rows="10" 
-                    placeholder='your content' 
-                    value={this.state.description}
-                    onChange={this.onDescriptionChange}
-                    ></textarea>
-                    <button>Post</button>
-                </form>
-            </div>
+            <form className = "form" action="" onSubmit={this.onSubmit}>
+                {this.state.error && <p className="form__error">{this.state.error}</p>}     
+                <input type="text" 
+                placeholder='Enter the title here' 
+                value={this.state.title}
+                onChange={this.onTitleChange}
+                />
+                <textarea name="" id="" cols="30" rows="10" 
+                placeholder='your content' 
+                value={this.state.description}
+                onChange={this.onDescriptionChange}
+                ></textarea>
+                <div>
+                        <button>Post</button>
+                </div>
+            </form>
         );
     }
 }

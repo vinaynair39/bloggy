@@ -4,7 +4,7 @@ import { startLoginUsingGoogle, startLogin } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
 import Link from 'react-router-dom/Link';
 import Tilt from 'react-tilt';
-export const LoginPage = ({ startLogin, error}) => {
+export const LoginPage = ({ startLogin, error,unsetError, loading}) => {
 
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
@@ -20,8 +20,15 @@ export const LoginPage = ({ startLogin, error}) => {
             })
         }
     }
+
+    const showErrors = () => {
+        if(!!error)
+            alert(error);
+            unsetError();
+    }
     return(
-          <div className="box-layout">
+        <div className="box-layout">
+            {loading && <div class="spinner"></div>}
             <div className="box-layout__box animated fadeInDown delay-1s">
                 <Tilt className="Tilt" options={{ max : 25 }} >
                     <h1 className="box-layout__title animated flash delay-2s">Blogacy</h1>
@@ -39,10 +46,10 @@ export const LoginPage = ({ startLogin, error}) => {
                         placeholder={error ? <p>{error}</p> : "password"}
                         className="animated fadeInRight delay-2s"
                         />
-                        <button className="button-primary button-primary__login ">Login</button>
+                        <button className="button button-primary">Login</button>
                     </form>
-                    {error && alert(error)}
-                    <h6 className="box-layout__question animated infinite pulse">Not Registered?</h6> <Link to='/signup'><button className="button-secondary">Sign Up</button></Link>
+                    {error && showErrors()}
+                    <h6 className="box-layout__question animated infinite pulse">Not Registered?</h6> <Link to='/signup'><button className="button button-secondary">Sign Up</button></Link>
                 </div>
             </div>
         </div>
@@ -51,11 +58,16 @@ export const LoginPage = ({ startLogin, error}) => {
 
 const mapDispatchToProps = (dispatch) => ({
     startLoginUsingGoogle: () => dispatch(startLoginUsingGoogle()),
-    startLogin: (credentials)=> dispatch(startLogin(credentials))
+    startLogin: (credentials)=> dispatch(startLogin(credentials)),
+    unsetError: () => dispatch({
+        type: 'SET_ERRORS',
+        error: ''
+    })
 });
 
 const mapStateToProps = (state) => ({
-    error: state.auth.error
+    error: state.auth.error,
+    loading: state.auth.loading
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

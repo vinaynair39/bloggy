@@ -170,3 +170,22 @@ export const startAddUserImage =  (formData) => {
         }).catch(err => console.log(err.response))
     }
 };
+
+export const checkLikeBlog = (condition) => {
+    return {
+      type: "CHECK_LIKE_BLOG",
+      condition
+    };
+  }
+
+export const setCheckLikeBlog = (blogId) => {
+    return (dispatch) => {
+        return axios.get(`${blogId}/checkLike`).then((res) => {
+            dispatch(checkLikeBlog(res.data))
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data.error)
+            console.log(err)
+        })
+    }
+}

@@ -3,6 +3,10 @@ import {NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {startLogout} from '../actions/auth';
 import {Link} from 'react-router-dom'
+import { faPlus, faBlog,faBell } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+
 
 const Header = (props) =>{
 
@@ -13,7 +17,7 @@ const Header = (props) =>{
 
     const getNotifications = () => {
         return props.notifications.map(notification => {
-            const path = notification.blogId ? '/blog/' + notification.blogId : '/dashboard'
+            const path = notification.blogId ? '/blog/' + notification.blogId : '/dashboard';
             return <Link to={path}><li>{notification.sender} {notification.type === 'like' ? 'liked': 'commented on'} your blog</li></Link>
         })
     }
@@ -23,22 +27,27 @@ const Header = (props) =>{
                 <div >
                     <Link to="/dashboard" className="header__title"><h1 >Bloggy</h1></Link>
                 </div>
-                <nav role="navigation">
-                    <div className="header__links">
-                        <input type="checkbox" id="toggle"/>
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    
-                        <ul className="menu">
-                            <NavLink to="/add" activeClassName="is-active">Add Blogs</NavLink>
-                            <NavLink to="/myblogs" activeClassName="is-active">My Blogs</NavLink>
-                            <NavLink to="/user" activeClassName="is-active">{props.userHandle}</NavLink>
-                            <button onClick={props.logout}>Logout</button>
-                            <button onClick={onClick}>Notifications</button> 
-                        </ul>  
+                <div className="header__links" >
+                    <input type="checkbox" id="toggler"/>
+                    <div id="hamburger">
+                        <div></div>
                     </div>
-                </nav>
+                        <div id="menu">
+                            <div>
+                                <div>
+                                    <ul>
+                                        <NavLink to="/add" activeClassName="is-active"><FontAwesomeIcon icon={faPlus}/> Add Blog</NavLink>
+                                        <NavLink to="/myblogs" activeClassName="is-active"><FontAwesomeIcon icon={faBlog}/> My Blogs</NavLink>
+                                        <NavLink to="/user" activeClassName="is-active">{props.userHandle}</NavLink>
+                                        <button onClick={onClick}><FontAwesomeIcon icon={faBell} className="notification-button"/></button>
+                                        <button onClick={props.logout} className="button-logout">Logout</button>
+                                        
+                                    </ul> 
+                                </div>
+                            </div>
+                        </div>
+ 
+                </div>
                 {toggle && <ul>{getNotifications()}</ul>}
             </div>
             </div>

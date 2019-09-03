@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import {startSignUp } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
 import Tilt from 'react-tilt';
-export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
+// import { Input } from 'semantic-ui-react'
+export const LoginPage = ({ startSignUp, error, setUIErrors, loading}) => {
 
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
@@ -54,6 +55,7 @@ export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
 }
     return(
           <div className="box-layout">
+            {loading && <div class="spinner"></div>}
             <div className="box-layout__signup-box animated fadeInDown delay-1s">
                 <Tilt className="Tilt" options={{ max : 25 }} >
                     <h1 className="box-layout__title animated flash delay-2s">Blogacy</h1>
@@ -62,6 +64,9 @@ export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
                 <div className="box-layout__form">
                     {error.length > 0 && alert(error)}
                     <form onSubmit={onStartSignUp}>
+                       {/* <Input loading icon='user' placeholder="Enter your user Handle"
+                       value={userHandle}
+                       onChange={e => (getUserHandle(e.target.value))}/>    */}
                        <input type="text" value={userHandle}  
                         placeholder="Enter your user Handle"
                         onChange={e => (getUserHandle(e.target.value))}/>
@@ -77,7 +82,7 @@ export const LoginPage = ({ startSignUp, error, setUIErrors}) => {
                         <input type="text" value={name}  
                         placeholder="Name"
                         onChange={e => (getName(e.target.value))}/>
-                        <button className="button-primary">Sign Up</button>
+                        <button className="button button-primary">Sign Up</button>
                     </form>
                 </div>
             </div>
@@ -94,7 +99,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = (state) => ({
-    error: state.auth.error? state.auth.error : [],
+    error: state.auth.error ? state.auth.error : [],
+    loading: state.auth.loading
    
 })
 
