@@ -6,13 +6,14 @@ import selectBlogs from '../selectors/blogs'
 export const BlogList = (props) => (
     <div className="list">
         {props.blogs.length === 0 ? (<p>No blogs</p>) : (props.blogs.map((blog) => {
-            return <BlogListItem key={blog.id} {...blog} />
+            return <BlogListItem key={blog.id} userImage={props.userImage} {...blog} />
         }))}
     </div>
 )
 
 const mapStateToProps = (state) => ({
-    blogs: selectBlogs(state.blogs,state.filters)
+    blogs: selectBlogs(state.blogs,state.filters),
+    userImage: state.auth.user.imageUrl ? state.auth.user.imageUrl: ''
 });
 
 export default connect(mapStateToProps)(BlogList);
