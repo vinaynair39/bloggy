@@ -1,0 +1,32 @@
+.card{
+    display: grid;
+    grid-auto-columns: 2fr 1fr;
+    grid-template-areas: 
+    "blog famous";
+    justify-items: end;
+    @media screen and (max-width: 1050px){
+        display: flex;
+      }
+}
+.blog-card{
+    grid-area: blog;
+}
+.famous-card{
+    grid-area: famous;
+}
+
+.famous-card__body{
+    position: relative;
+    height: 70vh;
+    width: 30vw;
+    margin: 4rem;
+    box-shadow: 0 10px 20px rgba($black, 0.3), 0 6px 17px rgba($black, 0.2);
+    img{
+        height: 7rem;
+        margin-right: 0.5rem;
+    }
+    border-bottom: 1px solid green;
+    @media screen and (max-width: 1050px){
+        display: none;
+      }
+}

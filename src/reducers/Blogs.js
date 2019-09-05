@@ -18,6 +18,9 @@ const blogsReducer = (state = [], action) => {
                 };
                     return blog;
             });
+
+        // case 'FAMOUS_USERS':
+        //     return state;
         case 'LIKE_BLOG':
             const index1 = state.findIndex(blog => blog.id === action.id);
             state[index1].likeCount += 1;

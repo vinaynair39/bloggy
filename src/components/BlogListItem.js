@@ -22,7 +22,7 @@ export const BlogListItem = ({ title, description, createdAt, userHandle, id, bl
                     <p className="list-card__content-text">{description.substring(0, 350) + '...'}</p>
                 </div>
             </div>
-            <div class="list-card__body-date">
+            <div className="list-card__body-date">
                 <div>
                     <h5>{moment(createdAt).format("Do")}</h5>
                     <h6>{moment(createdAt).format("MMMM") + " " + moment(createdAt).format("YYYY")}</h6>

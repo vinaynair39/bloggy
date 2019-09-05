@@ -4,7 +4,7 @@ import {startSignUp } from '../actions/auth';
 import isEmail from 'validator/lib/isEmail';
 import Tilt from 'react-tilt';
 // import { Input } from 'semantic-ui-react'
-export const LoginPage = ({ startSignUp, error, setUIErrors, loading}) => {
+export const LoginPage = ({ startSignUp, error, setUIErrors, loading, unsetError}) => {
 
     const [email, getEmail] = useState('');
     const [password, getPassword] = useState('');
@@ -53,6 +53,11 @@ export const LoginPage = ({ startSignUp, error, setUIErrors, loading}) => {
 
 
 }
+const showErrors = () => {
+    if(!!error)
+        alert(error);
+        unsetError();
+}
     return(
           <div className="box-layout">
             {loading && <div class="spinner"></div>}
@@ -62,7 +67,7 @@ export const LoginPage = ({ startSignUp, error, setUIErrors, loading}) => {
                 </Tilt>
                 <h2 className="box-layout__subtitle">Read, Write and Grow</h2>
                 <div className="box-layout__form">
-                    {error.length > 0 && alert(error)}
+                    {error.length > 0 && showErrors()}
                     <form onSubmit={onStartSignUp}>
                        {/* <Input loading icon='user' placeholder="Enter your user Handle"
                        value={userHandle}
@@ -95,6 +100,10 @@ const mapDispatchToProps = (dispatch) => ({
     setUIErrors: (error) => dispatch({
         type: 'SET_ERRORS',
         error: error
+    }),
+    unsetError: () => dispatch({
+        type: 'SET_ERRORS',
+        error: ''
     })
 });
 

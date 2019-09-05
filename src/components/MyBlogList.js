@@ -5,9 +5,8 @@ import {startGetUserBlogs} from '../actions/auth';
 
 
 export const MyBlogList = (props) => {
-
-    useEffect(() => {
-        props.getUserBlogs(props.userHandle)
+    useEffect(() => {   
+        props.getUserBlogs(props.handle || props.userHandle)
     }, [])
 
     // // async function load() {

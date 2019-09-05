@@ -8,7 +8,7 @@ import Comments from './Comments'
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const BlogCard = (props) => {
-    const [likeCount, setLikeCount] = useState(props.blog.likeCount)
+    const [likeCount, setLikeCount] = useState(props.blog.likeCount);
     const id = props.match.params.id;
 
     useEffect(() => {

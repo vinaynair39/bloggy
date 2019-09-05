@@ -122,6 +122,17 @@ export const startGetUserBlogs =  (userHandle) => {
     }
 };
 
+export const startGetUserDetails =  (userHandle) => {
+    return (dispatch) => {
+        dispatch({type: 'LOADING_UI'});
+        return axios.get(`/user/${userHandle}`).then(({data}) => {
+            return data.user;
+            dispatch({type: 'UNLOADING_UI'});
+        }).catch(err => console.log(err.response))
+    }
+};
+
+
 
 export const getAuthenticatedUser =  (user, notifications) => {
     return{
@@ -184,7 +195,48 @@ export const setCheckLikeBlog = (blogId) => {
             dispatch(checkLikeBlog(res.data))
         }).catch(err => {
             if(err.response)
-                alert(err.response.data.error)
+                alert(err.response.data)
+            console.log(err)
+        })
+    }
+}
+
+
+export const followUser = (recipient) => {
+    return (dispatch) => {
+        return axios.post(`../follow`,{recipient}).then((res) => {
+            console.log({recipient})
+            return res.data;
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data)
+            console.log(err)
+        })
+    }
+}
+
+
+
+
+export const unfollowUser = (recipient) => {
+    return (dispatch) => {
+        return axios.post(`../unfollow`,{recipient}).then((res) => {
+            return res.data;
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data)
+            console.log(err)
+        })
+    }
+}
+
+export const getFollows = (recipient) => {
+    return (dispatch) => {
+        return axios.get(`../getFollows`).then((res) => {
+            return res.data;
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data)
             console.log(err)
         })
     }

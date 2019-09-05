@@ -13,7 +13,7 @@ export const BlogList = (props) => (
 
 const mapStateToProps = (state) => ({
     blogs: selectBlogs(state.blogs,state.filters),
-    userImage: state.auth.user.imageUrl ? state.auth.user.imageUrl: ''
+    userImage: state.auth.user ? state.auth.user.imageUrl: ''
 });
 
 export default connect(mapStateToProps)(BlogList);

@@ -18,20 +18,20 @@ const BlogFilter = (props) => {
           />
         </div>
         <div className="input-group__item">
-        <div class="inner">
-        <div class="item">
+        <div className="inner">
+        <div className="item">
           <input type="radio" id="male" name="gender" value="male" checked={props.filters.sortBy === 'likes'} 
-          onClick ={() => {
+          onChange ={() => {
             props.dispatch(sortByLikes());
           }}/>
-          <label title="Sort by Likes" for="male"><FontAwesomeIcon icon={faHeart}/></label>
+          <label title="Sort by Likes" htmlFor="male"><FontAwesomeIcon icon={faHeart}/></label>
         </div>
-        <div class="item">
+        <div className="item">
           <input type="radio" id="female" name="gender" value="female" checked={props.filters.sortBy === 'date'}
-          onClick ={() => {
+          onChange ={() => {
             props.dispatch(sortByDate());
           }}/>
-          <label title="Recent" for="female"><FontAwesomeIcon icon={faTable}/></label>
+          <label title="Recent" htmlFor="female"><FontAwesomeIcon icon={faTable}/></label>
         </div>
       </div>
         </div>

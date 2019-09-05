@@ -3,10 +3,10 @@ import MyBlogList from './MyBlogList';
 import UserDetails from './UserDetails';
 import {history} from '../routers/AppRouter';
 
-const MyBlogsPage = () => (
+const MyBlogsPage = (props) => (
     <div>
-        <UserDetails/>
-        <MyBlogList/>
+        <UserDetails handle={props.match.params.handle}/>
+        <MyBlogList handle={props.match.params.handle}/>
     </div>
 )
 

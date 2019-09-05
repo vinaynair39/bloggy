@@ -3,6 +3,10 @@
   flex-wrap: wrap;
   justify-content: space-between;
   font-family: 'Roboto', sans-serif;
+  @media screen and (max-width: 1050px){
+   justify-content: center
+  }
+
   @media screen and (max-width: $desktop-breakpoint){
     display: flex;
     flex-direction: column;
@@ -43,12 +47,15 @@
 
 .list-card__body{
   display: grid;
-  grid-auto-columns: minmax(auto,2fr) 1fr;
-  grid-auto-rows: 2fr 1fr;
+  grid-template-columns:  1.5fr 1fr;
+  grid-template-rows: 2fr 1fr;
   grid-template-areas: 
   "img content"
   "data content";
   height: inherit;
+  @media screen and (max-width: 1050px){
+    grid-template-columns: 0.5fr 1fr;
+   }
   @media screen and(max-width: $desktop-breakpoint){
     display: flex;
     flex-direction: column;
@@ -80,11 +87,16 @@
 .list-card__content{
   overflow: hidden;
   grid-area: content;
+  @media screen and (max-width: 1050px){
+    // min-width: ;
+   }
   margin: 0.6rem 1rem;
   h3{
     margin:0 1rem 1rem 0;
   }
   padding: 0.5rem;
+
+  
 }
 .list-card__body-author{
   align-self: start;
@@ -101,6 +113,9 @@
     border-radius: 10rem;
     height: 3rem;
     margin-right: 0.5rem;
+    @media screen and (max-width: $desktop-breakpoint){
+      height: 5rem;   
+     }
   }
   h3{
     font-size: $font-size-small;
@@ -109,6 +124,12 @@
     border-radius: 1rem;
     padding: 0.4rem 0.8rem;
     font-weight: 100;
+    @media screen and (max-width: $desktop-breakpoint){
+      height: 5rem; 
+      font-size: $font-size-large;
+      padding: 0 1rem;
+      padding-top: 1rem;
+     }
   }
 }
 .list-card__body-title{
@@ -187,9 +208,6 @@
     }
 
   }
-
-
-  
 }
 
 .list-card__fab{

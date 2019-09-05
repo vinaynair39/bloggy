@@ -113,3 +113,23 @@ export const setUnLikeBlog = (blogId) => {
         })
     }
 }
+
+
+export const famousUsers = () => {
+    return {
+      type: "FAMOUS_USERS",
+    };
+  }
+
+export const getFamousUsers = () => {
+    return (dispatch) => {
+        return axios.get(`../famousUser`).then((res) => {
+            return res.data;
+        }).catch(err => {
+            if(err.response)
+                alert(err.response.data)
+            console.log(err)
+        })
+    }
+}
+
