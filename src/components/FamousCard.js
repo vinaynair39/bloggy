@@ -13,6 +13,7 @@ export const FamousCard = ({getFamousUser}) => {
     },[])
     return(
         <div className="famous-card__body">
+            <div className="famous-card__body-heading">Top Bloggers</div>
             {users.length === 0 ? (<p>loading</p>) : (users.map((user) => {
             return <FamousCardItem  key={user.userId} {...user}/>
         }))}

@@ -126,25 +126,31 @@ export const startGetUserDetails =  (userHandle) => {
     return (dispatch) => {
         dispatch({type: 'LOADING_UI'});
         return axios.get(`/user/${userHandle}`).then(({data}) => {
-            return data.user;
+            console.log(data);
+            const userData = {
+                user: data.user,
+                follows: data.follows
+            }
             dispatch({type: 'UNLOADING_UI'});
+            return userData;
         }).catch(err => console.log(err.response))
     }
 };
 
 
 
-export const getAuthenticatedUser =  (user, notifications) => {
+export const getAuthenticatedUser =  (user, notifications,follows) => {
     return{
         type: 'GET_AUTHENTICATED_USER',
         user,
-        notifications
+        notifications,
+        follows
     };
 };
 export const startGetAuthenticatedUser =  () => {
     return (dispatch) => {
         return axios.get(`/user`).then(res => {
-            dispatch(getAuthenticatedUser(res.data.credentials, res.data.notifications))
+            dispatch(getAuthenticatedUser(res.data.credentials, res.data.notifications,res.data.follows))
         }).catch(err => console.log(err.response))
     }
 };

@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {history} from '../routers/AppRouter';
 import {startGetUserDetails, getFollows} from '../actions/auth';
-export const UserDetails = ({user, handle,getUserDetails, getFollows}) => {
+export const UserDetails = ({user, handle,getUserDetails, getFollows, follows}) => {
     
     const [userData, setUserData] = useState([]);
     const [followers, setFollowers] = useState([])
@@ -11,14 +11,13 @@ export const UserDetails = ({user, handle,getUserDetails, getFollows}) => {
     useEffect(() => {
         if(handle){
             getUserDetails(handle).then(data => {
-                setUserData(data);
+                setUserData(data.user);
+                setFollowers(data.follows.followers);
+                setFollowing(data.follows.following);
             });
 
         }
-        getFollows().then(data => {
-            setFollowers(data.followers);
-            setFollowing(data.following);
-        })
+
     },[])
 
     return(
@@ -27,8 +26,8 @@ export const UserDetails = ({user, handle,getUserDetails, getFollows}) => {
             <img src={userData.imageUrl || user.imageUrl} alt="" />
             <h2>{(userData.name && userData.name) || (user.name && user.name)}</h2>
             <h3>userHandle: {userData.userHandle || user.userHandle}</h3>
-            <h3>Followers:{followers.length}</h3>
-            <h3>Following:{following.length}</h3>
+            <h3>Followers:{followers.length || follows.followers}</h3>
+            <h3>Following:{following.length || follows.following}</h3>
             <h3>email: {userData.email || user.email}</h3>
             {history.path}
             {(userData.bio && <h3>bio: {userData.bio}</h3>)||(user.bio && <h3>bio: {user.bio}</h3>)}
@@ -38,7 +37,8 @@ export const UserDetails = ({user, handle,getUserDetails, getFollows}) => {
 }
 
 const mapStateToProps = (state,props) => ({
-    user: props.handle ? '' : state.auth.user
+    user: props.handle ? '' : state.auth.user,
+    follows: state.auth.follows
 })
 const mapDispatchToProps = (dispatch) => ({
     getUserDetails: (handle) => dispatch(startGetUserDetails(handle)),

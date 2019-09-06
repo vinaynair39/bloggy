@@ -5,6 +5,7 @@ const initialState = {
     userBlogs: [],
     user: {},
     notifications: [],
+    follows: {},
     checkLike: false
 }
 
@@ -51,7 +52,8 @@ const authReducer = (state=initialState , action) => {
             return {
                 ...state,
                 user: action.user,
-                notifications: action.notifications
+                notifications: action.notifications,
+                follows: action.follows
             }
         case 'CHECK_LIKE_BLOG':
         return {

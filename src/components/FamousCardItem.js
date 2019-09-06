@@ -8,19 +8,21 @@ const FamousCard = ({name, userHandle, imageUrl, followUser, unfollowUser}) => {
         followUser(userHandle);
     }
     return(
-        <div className=''>
-            <Link to={`/user/${userHandle}`}>
+        <div className='famous-card__body-content'>
             <div>
                 <img src={imageUrl} alt=""/>
             </div>
-            <div className="famous-card__body-name">
-                <h3>{name}</h3>
+            
+            <div className="famous-card__body-content-title">
+                <Link to={`/user/${userHandle}`}>
+                    <h3>{userHandle}</h3>
+                    <h4>vinay nair</h4>
+                </Link>
             </div>
-            <div>
-                <h4>{userHandle}</h4>
+            <div className="">
+                
             </div>
-            </Link>
-            <div>
+            <div className="famous-card__body-content-button">
                 <button onClick={onFollowUser}>Follow</button>
             </div>
             

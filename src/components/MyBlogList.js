@@ -9,16 +9,6 @@ export const MyBlogList = (props) => {
         props.getUserBlogs(props.handle || props.userHandle)
     }, [])
 
-    // // async function load() {
-    // //     setLoading(true)
-    // //     await props.getUser(userHandle).then(() => {
-    // //         setLoading(false)
-    // //     })
-    // // }
-    // const onSetBlogs = () => {
-    //     setBlogs(props.blogs)
-    // }
-    
     return (
         <div>
              {props.blogs.length === 0 ? (<p>no blogs..</p>) : (props.blogs.map((blog) => {
