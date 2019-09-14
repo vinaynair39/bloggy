@@ -24,13 +24,12 @@ export const startSignUp = (credentials) => {
         dispatch({type: 'LOADING_UI'});
         axios.post('/signup', credentials).then((res) => {
             setAuthorizationHeader(res.data.token);
-            dispatch({type: 'UNLOADING_UI'});
             dispatch(startGetUserHandle()).then(() => {
-                dispatch(login());
+                dispatch(startGetAuthenticatedUser()).then(() => {
+                    dispatch(login());
+                    dispatch({type: 'UNLOADING_UI'});
+                })
                 dispatch(startSetBlogs()).then(() => {
-                    if (history.location.pathname === '/') {
-                        history.push('/dashboard');
-                    }
             })
             })
             
@@ -57,16 +56,13 @@ export const startLogin =  (credentials) => {
         return axios.post('/login', credentials).then(res => {
             setAuthorizationHeader(res.data.token);
             dispatch(startGetUserHandle()).then(() => {
-                dispatch(login());
-                dispatch(startGetAuthenticatedUser());
+                dispatch(startGetAuthenticatedUser()).then(() => {
+                    dispatch(login());
+                })
                 dispatch(startSetBlogs()).then(() => {
                     dispatch({type: 'UNLOADING_UI'});
-                    if (history.location.pathname === '/') {
-                        history.push('/dashboard');
-                    }
             })
             })
-            
             }).catch(err => {
                 dispatch({
                     type: 'SET_ERRORS',
@@ -181,8 +177,12 @@ export const addUserImage = (imageUrl) => {
 
 export const startAddUserImage =  (formData) => {
     return (dispatch) => {
+        dispatch({type: 'LOADING_UI'});
+        console.log(formData);
         return axios.post(`/user/image`, formData).then(res => {
             dispatch(addUserImage(res.data));
+            dispatch({type: 'UNLOADING_UI'});
+            return res.data;
             // history.goBack();
         }).catch(err => console.log(err.response))
     }
@@ -211,7 +211,6 @@ export const setCheckLikeBlog = (blogId) => {
 export const followUser = (recipient) => {
     return (dispatch) => {
         return axios.post(`../follow`,{recipient}).then((res) => {
-            console.log({recipient})
             return res.data;
         }).catch(err => {
             if(err.response)
@@ -236,14 +235,23 @@ export const unfollowUser = (recipient) => {
     }
 }
 
-export const getFollows = (recipient) => {
+export const getFollows = () => {
     return (dispatch) => {
         return axios.get(`../getFollows`).then((res) => {
             return res.data;
         }).catch(err => {
             if(err.response)
-                alert(err.response.data)
-            console.log(err)
+                console.log(err)
+        })
+    }
+}
+export const getFollowsOf = (recipient) => {
+    return (dispatch) => {
+        return axios.get(`../getFollows/${recipient}`).then((res) => {
+            return res.data;
+        }).catch(err => {
+            if(err.response)
+                console.log(err)
         })
     }
 }

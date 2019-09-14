@@ -11,8 +11,8 @@ import PublicRoute from './PublicRoute';
 import PrivateRoute from './PrivateRoute';
 import BlogCard from '../components/BlogCard'
 import SignupPage from '../components/SignupPage';
-import EditUserDetails from '../components/EditUserDetails'
-import UserDetails from '../components/UserDetails'
+import EditUserDetails from '../components/EditUserDetails';
+import UserDetailsPage from '../components/UserDetailsPage'
 
 
 export const history = createHistory();
@@ -22,7 +22,7 @@ const AppRouter = () => (
             <PublicRoute path='/' component={LoginPage} exact={true}></PublicRoute>
             <PublicRoute path='/signup' component={SignupPage}></PublicRoute>
             <PrivateRoute path='/dashboard' component={DashboardPage}></PrivateRoute>
-            <PrivateRoute path='/user' component={UserDetails} exact={true}></PrivateRoute>
+            <PrivateRoute path='/user' component={UserDetailsPage} exact={true}></PrivateRoute>
             <PrivateRoute path='/edit' component={EditUserDetails} exact={true}></PrivateRoute>
             <PrivateRoute path='/myblogs' component={MyBlogsPage}></PrivateRoute>
             <PrivateRoute path='/user/:handle' component={MyBlogsPage}></PrivateRoute>

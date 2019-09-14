@@ -9,41 +9,53 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const BlogCard = (props) => {
     const [likeCount, setLikeCount] = useState(props.blog.likeCount);
+    const [checkLike, setCheckLike] = useState(props.checkLike)
     const id = props.match.params.id;
 
     useEffect(() => {
         props.checkLikeBlog(id);
+        console.log(checkLike)
     },[likeCount])
-    
 
     const onClickLike = () => {
         props.likeBlog(id).then(() => {
-            setLikeCount(props.blog.likeCount);
-
+            setLikeCount(likeCount + 1);
+            setCheckLike(true)
         });
     };
 
     const onClickUnLike = () => {
         props.unLikeBlog(id).then(() => {
-            setLikeCount(props.blog.likeCount);
-
+            setLikeCount(likeCount - 1);
+            setCheckLike(false)
         });
     };
 
     return(
-        <div className="content-container">
-            {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
+        <div className="content-container blog-card">
+            {/* {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
             <button>Edit</button>
             </Link>
-            }
-            <h2>{props.blog.title}</h2><p>By: {props.blog.userHandle}</p> <p>{moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
-            <p>{props.blog.description}</p>
-            <button className="btn-secondary like-review"
-            onClick={onClickLike}><FontAwesomeIcon icon={faHeart}/>{props.checkLike ? likeCount + " you liked this blog!": likeCount}
+            } */}
+            <div>
+                <h2>{props.blog.title}</h2>
+                <p>By: {props.blog.userHandle}</p> 
+                <p>{moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
+            </div>
+            <div>
+                <img src={props.blog.imageUrl} alt=""/>
+            </div>
+            <div>
+                <p>{props.blog.description}</p>
+            </div>
+            {checkLike ? (<button className="btn-secondary like-review" onClick={onClickUnLike}>Unlike</button>) : (
+            <button className="btn-primary like-review" onClick={onClickLike}><FontAwesomeIcon icon={faHeart}/>{checkLike ? likeCount + " you liked this blog!": likeCount}</button>) }
+            {/* <button className="btn-secondary like-review"
+            onClick={onClickLike}><FontAwesomeIcon icon={faHeart}/>{checkLike ? likeCount + " you liked this blog!": likeCount}
             </button>
             <button 
-            onClick={onClickUnLike}>Unlike
-            </button>
+            onClick={onClickUnLike}>Unlike */}
+            {/* </button> */}
             <Comments commentCount={props.blog.commentCount} id={id} />
         </div>
     )

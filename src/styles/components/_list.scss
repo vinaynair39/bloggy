@@ -12,17 +12,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 0 1rem;
+    margin: 0 2rem;
   }
 }
 
 .list-card{ 
   position: relative;
-  height: 67vh;
+  height: 42rem;
   width: 55vw;
-  margin: 4rem;
+  margin: 4rem; 
   box-shadow: 0 10px 20px rgba($black, 0.3), 0 6px 17px rgba($black, 0.2);
-  // padding: 3rem;
   @media screen and (max-width: $desktop-breakpoint){
     text-align: center;
     margin: 4.3rem 0;
@@ -43,6 +42,7 @@
     cursor: pointer;
   }
 }
+
 
 
 .list-card__body{

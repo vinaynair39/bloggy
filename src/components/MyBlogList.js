@@ -6,25 +6,22 @@ import {startGetUserBlogs} from '../actions/auth';
 
 export const MyBlogList = (props) => {
     useEffect(() => {   
+        console.log('hey')
         props.getUserBlogs(props.handle || props.userHandle)
-    }, [])
+    },[])
 
     return (
-        <div>
+        <>
              {props.blogs.length === 0 ? (<p>no blogs..</p>) : (props.blogs.map((blog) => {
                 return <BlogListItem key={blog.id} {...blog} />
             }))}
-        </div>
+        </>
     )
 }
 
 const mapStateToProps = (state) => ({
     userHandle: state.auth.userHandle,
     blogs: state.auth.userBlogs ? state.auth.userBlogs : []
-    // blogs: state.blogs.filter((blog) => {
-    //     if(blog.userHandle === state.auth.userHandle)
-    //         return blog;
-    // })
 });
 const mapDispatchToProps = (dispatch) => ({
     getUserBlogs: (userHandle) => dispatch(startGetUserBlogs(userHandle)),

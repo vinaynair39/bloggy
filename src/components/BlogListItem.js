@@ -3,12 +3,13 @@ import moment from 'moment';
 import Link from 'react-router-dom/Link';
 import { faHeart, faComment, faShare ,faArrowDown} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {history} from '../routers/AppRouter';
 
-export const BlogListItem = ({ title, description, createdAt, userHandle, id, blogId, userImage }) => (
-    <div className="list-card">
+export const BlogListItem = ({ title, description, createdAt, userHandle, id, blogId, userImage, imageUrl }) => (
+    <div className={"list-card" + (history.location.pathname === '/myblogs' ? " my-blogs__list-card":"")}>
         <div className="list-card__body">
             <div className="list-card__image">
-                <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/201909/liverpool-770x433.png?_k_2Z7c2OGBarV0cZqeg9HlrgrH4yjyw" alt="" />
+                <img src={imageUrl} alt="" />
             </div>
             <div className="list-card__content">
                 <Link className="list-card__body-title" to={`/blog/${id || blogId}`}>

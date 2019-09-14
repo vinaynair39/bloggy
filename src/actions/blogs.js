@@ -5,10 +5,10 @@ import axios from 'axios';
 
 export const addBlog = (blog) => ({
     type: 'ADD_BLOG',
-    blog
+    blog,
 });
 
-export const startAddBlog = (blogData = {}) => {
+export const startAddBlog = (blogData = {}, formdata) => {
     return (dispatch,getState) => {
         axios.post('../../add', blogData).then((res) => {
             dispatch(addBlog(res.data));

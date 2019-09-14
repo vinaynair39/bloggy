@@ -10,6 +10,7 @@
     "@material-ui/icons": "^4.2.1",
     "animate.css": "^3.7.2",
     "axios": "^0.19.0",
+    "bulma": "^0.7.5",
     "firebase": "^6.3.1",
     "history": "^4.9.0",
     "jwt-decode": "^2.2.0",
@@ -28,6 +29,7 @@
     "react-use-form-state": "^0.11.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
+    "sass-loader": "^8.0.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.0",
     "tailwindcss": "^1.1.0",
@@ -36,12 +38,11 @@
     "validator": "^11.1.0"
   },
   "scripts": {
-    "build:style":"tailwind build src/styles/index.css -o src/styles/tailwind.css",
-    "start": "npm run build:style && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest --config=jest.config.json",
     "eject": "react-scripts eject"
-  },  
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

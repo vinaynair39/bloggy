@@ -6,7 +6,6 @@ import FamousCardItem from './FamousCardItem'
 export const FamousCard = ({getFamousUser}) => {
     const [users, setUsers] = useState([]);
     useEffect(() =>{
-        console.log(123)
         getFamousUser().then((users)=>{
             setUsers(users)
         })

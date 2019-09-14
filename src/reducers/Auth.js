@@ -5,7 +5,10 @@ const initialState = {
     userBlogs: [],
     user: {},
     notifications: [],
-    follows: {},
+    follows: {
+        following: [''],
+        followers: ['']
+    },
     checkLike: false
 }
 
@@ -71,6 +74,7 @@ const authReducer = (state=initialState , action) => {
             ...state,
             loading: false
         };
+
         case 'SET_ERRORS':
             return {
                 ...state,

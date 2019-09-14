@@ -5,6 +5,7 @@ export const EditUserDetails = ({user, addUserDetails, addUserImage}) => {
 
     const [bio, setBio] = useState(user.bio);
     const [website, setWebsite] = useState(user.website);
+    const [imageUrl, setImageUrl] = useState(user.imageUrl)
     const onSubmit = (e) => {
         e.preventDefault();
         const details ={
@@ -23,21 +24,32 @@ export const EditUserDetails = ({user, addUserDetails, addUserImage}) => {
         const formData = new FormData();
         console.log(image);
         formData.append('image', image, image.name);
-        addUserImage(formData)
+        addUserImage(formData).then(data => setImageUrl(data))
         
     }
     return(
-        <div>
-            <form onSubmit={onSubmit}>
+        <div className="edit-user">
+            <div className="edit-user__image">
+                <img src={imageUrl || user.imageUrl} alt=""/>   
                 <input type="file" hidden="hidden" name="" id="imageChange" onChange={onImageChange}/>
-                <button onClick={handleEditPicture}>change</button>
-                <img src={user.imageUrl} alt=""/>
-                <h2>{user.name}</h2>
-                <h3>{user.userHandle}</h3>
-                <label>Bio:</label><textarea  value={bio} onChange={(e) => setBio(e.target.value)}/>
-                <label>website:</label><textarea  value={website} onChange={(e) => setWebsite(e.target.value)}/>
-                <button>submit</button>    
-            </form>
+                <button className="button-secondary" onClick={handleEditPicture}>change</button>
+            </div>
+            <div className="edit-user__contents">
+                <form onSubmit={onSubmit}>
+                    <div>
+                        <h2>{user.name}</h2>
+                        <h3>{user.userHandle}</h3>
+                    </div>
+                    <div>
+                        <label>Bio:</label><textarea  value={bio || user.bio} onChange={(e) => setBio(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label>website:</label><textarea  value={website || user.website} onChange={(e) => setWebsite(e.target.value)}/>
+                    </div>
+                    
+                    <button type="submit">submit</button>    
+                </form>
+            </div>
         </div>
     );
 }
