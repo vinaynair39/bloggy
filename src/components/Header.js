@@ -38,8 +38,7 @@ const Header = (props) =>{
                                     <ul>
                                         <NavLink to="/add" activeClassName="is-active"><FontAwesomeIcon icon={faPlus}/> Add Blog</NavLink>
                                         <NavLink to="/myblogs" activeClassName="is-active"><FontAwesomeIcon icon={faBlog}/> My Blogs</NavLink>
-                                        <NavLink to="/user" activeClassName="is-active">{props.userHandle}</NavLink>
-                                        <button onClick={onClick}><FontAwesomeIcon icon={faBell} className="notification-button"/></button>
+                                        <button onClick={onClick}><FontAwesomeIcon icon={faBell} className="header__notification-button"/></button>
                                         <button onClick={props.logout} className="button-logout">Logout</button>
                                         
                                     </ul> 

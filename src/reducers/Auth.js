@@ -63,7 +63,7 @@ const authReducer = (state=initialState , action) => {
             ...state,
             checkLike: action.condition,
         }
-        
+
         case 'LOADING_UI':
             return {
                 ...state,
@@ -86,7 +86,7 @@ const authReducer = (state=initialState , action) => {
                 ...state,
                 loading: false,
                 error: null
-            };    
+            };
         case 'UNSET_AUTHENTICATED':
             return {
                 ...state,

@@ -5,24 +5,25 @@ import { faHeart, faComment, faShare ,faArrowDown} from "@fortawesome/free-solid
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {history} from '../routers/AppRouter';
 
-export const BlogListItem = ({ title, description, createdAt, userHandle, id, blogId, userImage, imageUrl }) => (
-    <div className={"list-card" + (history.location.pathname === '/myblogs' ? " my-blogs__list-card":"")}>
+export const BlogListItem = ({ title, description, createdAt, userHandle, id, blogId, userImageUrl, imageUrl }) => (
+    <div className={"list-card" + ((history.location.pathname === '/myblogs' || history.location.pathname.includes('/user')) ? " my-blogs__list-card":"")}>
         <div className="list-card__body">
             <div className="list-card__image">
                 <img src={imageUrl} alt="" />
             </div>
             <div className="list-card__content">
-                <Link className="list-card__body-title" to={`/blog/${id || blogId}`}>
+            <Link className="list-card__body-title" to={`/blog/${id || blogId}`}>
                     {title}
-                </Link>
                 <div className="list-card__body-author">
-                    <img src={userImage} alt=""/>
+                    <img src={userImageUrl} alt=""/>
                     <h3>{userHandle}</h3>
                 </div>  
                 <div>
                     <p className="list-card__content-text">{description.substring(0, 350) + '...'}</p>
                 </div>
+            </Link>
             </div>
+            
             <div className="list-card__body-date">
                 <div>
                     <h5>{moment(createdAt).format("Do")}</h5>
@@ -34,8 +35,8 @@ export const BlogListItem = ({ title, description, createdAt, userHandle, id, bl
                     <li><FontAwesomeIcon icon={faShare} size="2x"/></li>
                 </ul>
             </div>
-            
             </div>
+            
             <div className="list-card__fab">
                 <Link to={`/blog/${id || blogId}`}>
                     <FontAwesomeIcon icon={faArrowDown} color="white" size="3x"/>

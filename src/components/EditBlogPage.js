@@ -21,9 +21,8 @@ const EditBlogPage= (props) => {
     return(
         <div>
             <button onClick={removeBlog}>Remove</button>
-            <BlogForm onSubmit = {onSubmit}
+            <BlogForm onSubmit={onSubmit}
             blog={props.blog}/>
-            
         </div>
     )
 }

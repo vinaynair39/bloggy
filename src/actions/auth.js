@@ -32,7 +32,7 @@ export const startSignUp = (credentials) => {
                 dispatch(startSetBlogs()).then(() => {
             })
             })
-            
+
             }).catch(err => {
                 console.log(err.response)
                 dispatch({
@@ -64,6 +64,8 @@ export const startLogin =  (credentials) => {
             })
             })
             }).catch(err => {
+                console.log(err);
+                console.log(err.response);
                 dispatch({
                     type: 'SET_ERRORS',
                     error: err.response ? (err.response.data.general || err.response.data.err ) : ''
@@ -96,6 +98,7 @@ export const startGetUserHandle =  () => {
     return (dispatch) => {
         return axios.get('/userHandle').then(async res => {
             dispatch(getUserHandle(res.data))
+            console.log(res.data);
             await sessionStorage.setItem('userHandle', res.data)
         }).catch(err => console.log(err.response))
     }

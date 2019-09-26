@@ -5,7 +5,7 @@ import Link from 'react-router-dom/Link'
 import {setLikeBlog, setUnLikeBlog,} from '../actions/blogs';
 import {setCheckLikeBlog} from '../actions/auth';
 import Comments from './Comments'
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart , faCalendarAlt, faPenAlt} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export const BlogCard = (props) => {
     const [likeCount, setLikeCount] = useState(props.blog.likeCount);
@@ -33,14 +33,14 @@ export const BlogCard = (props) => {
 
     return(
         <div className="content-container blog-card">
-            {/* {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
+            {props.blog.userHandle === props.userHandle && <Link to={`../edit/${props.blog.id}`}>
             <button>Edit</button>
             </Link>
-            } */}
-            <div>
-                <h2>{props.blog.title}</h2>
-                <p>By: {props.blog.userHandle}</p> 
-                <p>{moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
+            }
+            <h2>{props.blog.title}</h2>
+            <div className="blog-card__by">
+            <img src={props.blog.userImageUrl} alt=""/> <Link to={`../user/${props.blog.userHandle}`} ><p><FontAwesomeIcon icon={faPenAlt} color="salmon"/> {props.blog.userHandle}</p></Link>
+                <p><FontAwesomeIcon icon={faCalendarAlt} color="salmon"/>  {moment(props.blog.createdAt).format("Do MMM YYYY")}</p>
             </div>
             <div>
                 <img src={props.blog.imageUrl} alt=""/>

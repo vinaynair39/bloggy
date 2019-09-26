@@ -2,5 +2,20 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+}
+
+.blog-card__by{
+    display: flex;
+}
+.blog-card__by p{
+    margin-right: 2rem;
+    font-size: $font-size-medium;
+    color:#C3C3C3;
+    font-weight: 500;
+}
+.blog-card__by img{
+    height: 4rem;
+    width: 4rem;
+    border-radius: 50%;
+    margin-right: 0.5rem;
 }

@@ -6,7 +6,7 @@ import selectBlogs from '../selectors/blogs'
 export const BlogList = (props) => (
     <div className="list">
         {props.blogs.length === 0 ? (<p>No blogs</p>) : (props.blogs.map((blog) => {
-            return <BlogListItem key={blog.id} userImage={props.userImage} {...blog} />
+            return <BlogListItem key={blog.id}  {...blog} />
         }))}
     </div>
 )

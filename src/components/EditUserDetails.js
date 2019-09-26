@@ -40,11 +40,13 @@ export const EditUserDetails = ({user, addUserDetails, addUserImage}) => {
                         <h2>{user.name}</h2>
                         <h3>{user.userHandle}</h3>
                     </div>
-                    <div>
-                        <label>Bio:</label><textarea  value={bio || user.bio} onChange={(e) => setBio(e.target.value)}/>
-                    </div>
-                    <div>
-                        <label>website:</label><textarea  value={website || user.website} onChange={(e) => setWebsite(e.target.value)}/>
+                    <div className="edit-user__contents-data">
+                        <div>
+                            <label>Bio:</label><textarea cols="30" rows="1" value={bio || user.bio} onChange={(e) => setBio(e.target.value)}/>
+                        </div>
+                        <div>
+                            <label>website:</label><textarea cols="30" rows="1"  value={website || user.website} onChange={(e) => setWebsite(e.target.value)}/>
+                        </div>
                     </div>
                     
                     <button type="submit">submit</button>    
